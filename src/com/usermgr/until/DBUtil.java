@@ -18,8 +18,6 @@ public class DBUtil {
 	private static String username;
 	private static String password;
 	
-	
-	
 	static{
 		try {
 			//加载文件

@@ -14,8 +14,9 @@ public class User {
 		
 	}
 
-	public User(String name, String sex, Date birthday) {
+	public User(int id,String name, String sex, Date birthday) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.sex = sex;
 		this.birthday = birthday;

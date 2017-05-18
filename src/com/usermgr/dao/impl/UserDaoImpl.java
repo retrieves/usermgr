@@ -1,9 +1,11 @@
 package com.usermgr.dao.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.usermgr.dao.UserDao;
@@ -70,20 +72,64 @@ public class UserDaoImpl implements UserDao {
 		}finally{
 			DBUtil.closeDB(conn, pstmt, null);
 		}
-		
 		return i;
 	}
 
 	@Override
 	public User getOne(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = null;
+		Connection conn = DBUtil.getConnnection();
+		String sql = "select * from user where id =?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				String name = rs.getString("name");
+				String sex = rs.getString("sex");
+				Date birthday = rs.getDate("birthday");
+				user = new User(id,name,sex,birthday);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DBUtil.closeDB(conn, pstmt, rs);
+		}
+		return user;
 	}
 
 	@Override
 	public List<User> getAll(String keyWord) {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> users = null;
+		Connection conn = DBUtil.getConnnection();
+		String sql = "select * from user where "
+				+ "id like ? or name like ? or sex like ? or birthday like binary ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+keyWord+"%");
+			pstmt.setString(2, "%"+keyWord+"%");
+			pstmt.setString(3, "%"+keyWord+"%");
+			pstmt.setString(4, "%"+keyWord+"%");
+			rs = pstmt.executeQuery();
+			users = new ArrayList<User>();
+			while(rs.next()){
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				String sex = rs.getString("sex");
+				Date birthday = rs.getDate("birthday");
+				User user = new User(id,name,sex,birthday);
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DBUtil.closeDB(conn, pstmt, rs);
+		}
+		return users;
 	}
 
 }
