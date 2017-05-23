@@ -1,8 +1,11 @@
 package com.usermgr.client;
 
+import java.rmi.server.Operation;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.usermgr.controler.Operator;
 import com.usermgr.dao.UserDao;
 import com.usermgr.dao.impl.UserDaoImpl;
 import com.usermgr.entity.User;
@@ -30,6 +33,11 @@ public class Test {
 		user.setName("李5");
 		dao.doUpdate(user);
 		System.out.println(DateUtil.getString());*/
+		
+		//DateUtil.getDate("输入生日(yyyy-MM-dd)", "格式不对输出");
+//		System.out.println(DateUtil.getInt("请输入整数"));
+		/*Operator.save();*/
 	}
+	
 
 }

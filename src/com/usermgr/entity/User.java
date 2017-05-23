@@ -1,5 +1,7 @@
 package com.usermgr.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 //pojo 传统的
@@ -56,8 +58,9 @@ public class User {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
 		return "编号=" + id + ", 姓名=" + name + ", 性别=" + sex
-				+ ", 生日=" + birthday.toLocaleString();
+				+ ", 生日=" + sdf.format(birthday);
 	}
 	
 	
